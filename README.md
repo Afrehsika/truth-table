@@ -15,7 +15,21 @@ A zero-dependency Python tool that takes any **Truth Table** (inputs, outputs, a
 
 ---
 
-## Quick Start: 6 Ways to Run It
+## Windows Installer & Standalone Executable (No Python Required)
+
+An installer and standalone application package with custom multi-resolution icons is included in the project:
+
+- **Graphical Installer**: Double-click [`Install.bat`](file:///c:/Users/Administrator/truth%20table/Install.bat) or run [`dist/TruthTableSynthesizer_Setup.exe`](file:///c:/Users/Administrator/truth%20table/dist/TruthTableSynthesizer_Setup.exe)
+  - Automatically installs the application to `%LocalAppData%\Programs\TruthTableSynthesizer`.
+  - Creates a **Desktop Shortcut** with the custom glowing logic-gate icon (`Truth Table to Logic Circuit Synthesizer.lnk`).
+  - Creates a **Start Menu Program Folder** with the custom icon and uninstaller.
+  - Can be uninstalled cleanly anytime via [`Uninstall.bat`](file:///c:/Users/Administrator/truth%20table/Uninstall.bat).
+- **Portable Version**: Extract [`dist/TruthTableSynthesizer_v1.0.0_Portable.zip`](file:///c:/Users/Administrator/truth%20table/dist/TruthTableSynthesizer_v1.0.0_Portable.zip) and double-click `TruthTableSynthesizer.exe` anywhere (runs portably with zero installation).
+- **Rebuilding the Installer**: Run `python build_installer.py` to regenerate the icon mipmaps, recompile the binaries, and build the setup installer.
+
+---
+
+## Quick Start: Running from Source / CLI
 
 Open a terminal (PowerShell or Command Prompt) in `c:\Users\Administrator\truth table`.
 
