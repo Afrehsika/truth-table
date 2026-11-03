@@ -25,7 +25,13 @@ import time
 from dataclasses import dataclass
 from typing import Callable, Dict, List, Optional, Sequence, Tuple, Union
 
+import sys
 import pygame
+
+def get_resource_path(relative_path: str) -> str:
+    """Get absolute path to resource, works for dev and for PyInstaller bundle."""
+    base_path = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
 
 from truth_table_system import (
     CircuitSolution,
@@ -119,6 +125,15 @@ class PygameTruthTableApp:
         pygame.display.set_caption(
             "Truth Table to Logic Circuit Synthesizer — Gate Count, Input Routing & Wiring"
         )
+        # Load custom app icon for taskbar & window header
+        icon_path = get_resource_path(os.path.join("assets", "icon.png"))
+        if os.path.exists(icon_path):
+            try:
+                icon_surf = pygame.image.load(icon_path)
+                pygame.display.set_icon(icon_surf)
+            except Exception:
+                pass
+
         self.width = width
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
