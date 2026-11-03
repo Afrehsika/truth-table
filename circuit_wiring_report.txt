@@ -1,0 +1,443 @@
+============================================================================
+DIGITAL LOGIC SYNTHESIS & WIRING REPORT
+============================================================================
+Inputs (4)          : a, b, c, d
+Outputs (8)         : s, a, b, c, d, e, f, g
+Building Blocks   : AND, OR
+Synthesis Engine  : Quine-McCluskey Minimization + Technology Mapper
+Verification      : PASSED (100% Truth Table Match)
+
+1. GATE COUNT SUMMARY
+----------------------------------------------------------------------------
+  Total Gate Count : 42
+  Logic Levels     : 6
+  By Gate Type     : AND: 17, NOT: 4, OR: 21
+
+2. WHERE EACH INPUT GOES (INPUT ROUTING TABLE)
+----------------------------------------------------------------------------
+  Input 'a' (fan-out = 5) connects to:
+    -> U9.in (NOT)
+    -> U11.in1 (AND)
+    -> U19.in1 (AND)
+    -> U39.in1 (AND)
+    -> Output s (direct wire)
+  Input 'b' (fan-out = 4) connects to:
+    -> U1.in (NOT)
+    -> U7.in1 (AND)
+    -> U19.in2 (AND)
+    -> U26.in2 (AND)
+  Input 'c' (fan-out = 5) connects to:
+    -> U4.in1 (AND)
+    -> U5.in2 (AND)
+    -> U6.in (NOT)
+    -> U10.in2 (AND)
+    -> U35.in2 (AND)
+  Input 'd' (fan-out = 4) connects to:
+    -> U2.in (NOT)
+    -> U8.in2 (AND)
+    -> U21.in2 (AND)
+    -> U27.in2 (OR)
+
+3. HOW TO CONNECT EACH GATE (STEP-BY-STEP WIRING GUIDE)
+----------------------------------------------------------------------------
+  [U1] NOT Gate (Level 1, Output Net: 'n1')
+    * Pin 'in'  <--  Connect to Primary Input 'b'
+    * Output 'n1' -->  Feeds: U3.in1 (AND), U5.in1 (AND), U11.in2 (AND), U17.in2 (AND), U20.in1 (AND)
+
+  [U2] NOT Gate (Level 1, Output Net: 'n2')
+    * Pin 'in'  <--  Connect to Primary Input 'd'
+    * Output 'n2' -->  Feeds: U3.in2 (AND), U4.in2 (AND), U18.in2 (AND), U34.in2 (AND), U39.in2 (AND)
+
+  [U3] AND Gate (Level 2, Output Net: 'n3')
+    * Pin 'in1'  <--  Connect to Output of U1 (NOT, net 'n1')
+    * Pin 'in2'  <--  Connect to Output of U2 (NOT, net 'n2')
+    * Output 'n3' -->  Feeds: U12.in1 (OR), U30.in1 (OR)
+
+  [U4] AND Gate (Level 2, Output Net: 'n4')
+    * Pin 'in1'  <--  Connect to Primary Input 'c'
+    * Pin 'in2'  <--  Connect to Output of U2 (NOT, net 'n2')
+    * Output 'n4' -->  Feeds: U12.in2 (OR), U31.in2 (OR), U41.in2 (OR)
+
+  [U5] AND Gate (Level 2, Output Net: 'n5')
+    * Pin 'in1'  <--  Connect to Output of U1 (NOT, net 'n1')
+    * Pin 'in2'  <--  Connect to Primary Input 'c'
+    * Output 'n5' -->  Feeds: U13.in1 (OR), U30.in2 (OR), U40.in1 (OR)
+
+  [U6] NOT Gate (Level 1, Output Net: 'n6')
+    * Pin 'in'  <--  Connect to Primary Input 'c'
+    * Output 'n6' -->  Feeds: U7.in2 (AND), U18.in1 (AND), U20.in2 (AND), U27.in1 (OR), U33.in2 (AND)
+
+  [U7] AND Gate (Level 2, Output Net: 'n7')
+    * Pin 'in1'  <--  Connect to Primary Input 'b'
+    * Pin 'in2'  <--  Connect to Output of U6 (NOT, net 'n6')
+    * Output 'n7' -->  Feeds: U8.in1 (AND), U40.in2 (OR)
+
+  [U8] AND Gate (Level 3, Output Net: 'n8')
+    * Pin 'in1'  <--  Connect to Output of U7 (AND, net 'n7')
+    * Pin 'in2'  <--  Connect to Primary Input 'd'
+    * Output 'n8' -->  Feeds: U13.in2 (OR), U31.in1 (OR)
+
+  [U9] NOT Gate (Level 1, Output Net: 'n9')
+    * Pin 'in'  <--  Connect to Primary Input 'a'
+    * Output 'n9' -->  Feeds: U10.in1 (AND), U17.in1 (AND), U26.in1 (AND)
+
+  [U10] AND Gate (Level 2, Output Net: 'n10')
+    * Pin 'in1'  <--  Connect to Output of U9 (NOT, net 'n9')
+    * Pin 'in2'  <--  Connect to Primary Input 'c'
+    * Output 'n10' -->  Feeds: U14.in1 (OR), U21.in1 (AND)
+
+  [U11] AND Gate (Level 2, Output Net: 'n11')
+    * Pin 'in1'  <--  Connect to Primary Input 'a'
+    * Pin 'in2'  <--  Connect to Output of U1 (NOT, net 'n1')
+    * Output 'n11' -->  Feeds: U14.in2 (OR), U28.in2 (OR), U35.in1 (AND)
+
+  [U12] OR Gate (Level 3, Output Net: 'n12')
+    * Pin 'in1'  <--  Connect to Output of U3 (AND, net 'n3')
+    * Pin 'in2'  <--  Connect to Output of U4 (AND, net 'n4')
+    * Output 'n12' -->  Feeds: U15.in1 (OR), PRIMARY OUTPUT [e]
+
+  [U13] OR Gate (Level 4, Output Net: 'n13')
+    * Pin 'in1'  <--  Connect to Output of U5 (AND, net 'n5')
+    * Pin 'in2'  <--  Connect to Output of U8 (AND, net 'n8')
+    * Output 'n13' -->  Feeds: U15.in2 (OR)
+
+  [U14] OR Gate (Level 3, Output Net: 'n14')
+    * Pin 'in1'  <--  Connect to Output of U10 (AND, net 'n10')
+    * Pin 'in2'  <--  Connect to Output of U11 (AND, net 'n11')
+    * Output 'n14' -->  Feeds: U16.in2 (OR)
+
+  [U15] OR Gate (Level 5, Output Net: 'n15')
+    * Pin 'in1'  <--  Connect to Output of U12 (OR, net 'n12')
+    * Pin 'in2'  <--  Connect to Output of U13 (OR, net 'n13')
+    * Output 'n15' -->  Feeds: U16.in1 (OR)
+
+  [U16] OR Gate (Level 6, Output Net: 'n16')
+    * Pin 'in1'  <--  Connect to Output of U15 (OR, net 'n15')
+    * Pin 'in2'  <--  Connect to Output of U14 (OR, net 'n14')
+    * Output 'n16' -->  Feeds: PRIMARY OUTPUT [a]
+
+  [U17] AND Gate (Level 2, Output Net: 'n17')
+    * Pin 'in1'  <--  Connect to Output of U9 (NOT, net 'n9')
+    * Pin 'in2'  <--  Connect to Output of U1 (NOT, net 'n1')
+    * Output 'n17' -->  Feeds: U22.in1 (OR)
+
+  [U18] AND Gate (Level 2, Output Net: 'n18')
+    * Pin 'in1'  <--  Connect to Output of U6 (NOT, net 'n6')
+    * Pin 'in2'  <--  Connect to Output of U2 (NOT, net 'n2')
+    * Output 'n18' -->  Feeds: U22.in2 (OR), U36.in1 (OR)
+
+  [U19] AND Gate (Level 1, Output Net: 'n19')
+    * Pin 'in1'  <--  Connect to Primary Input 'a'
+    * Pin 'in2'  <--  Connect to Primary Input 'b'
+    * Output 'n19' -->  Feeds: U23.in1 (OR)
+
+  [U20] AND Gate (Level 2, Output Net: 'n20')
+    * Pin 'in1'  <--  Connect to Output of U1 (NOT, net 'n1')
+    * Pin 'in2'  <--  Connect to Output of U6 (NOT, net 'n6')
+    * Output 'n20' -->  Feeds: U23.in2 (OR)
+
+  [U21] AND Gate (Level 3, Output Net: 'n21')
+    * Pin 'in1'  <--  Connect to Output of U10 (AND, net 'n10')
+    * Pin 'in2'  <--  Connect to Primary Input 'd'
+    * Output 'n21' -->  Feeds: U25.in2 (OR)
+
+  [U22] OR Gate (Level 3, Output Net: 'n22')
+    * Pin 'in1'  <--  Connect to Output of U17 (AND, net 'n17')
+    * Pin 'in2'  <--  Connect to Output of U18 (AND, net 'n18')
+    * Output 'n22' -->  Feeds: U24.in1 (OR)
+
+  [U23] OR Gate (Level 3, Output Net: 'n23')
+    * Pin 'in1'  <--  Connect to Output of U19 (AND, net 'n19')
+    * Pin 'in2'  <--  Connect to Output of U20 (AND, net 'n20')
+    * Output 'n23' -->  Feeds: U24.in2 (OR)
+
+  [U24] OR Gate (Level 4, Output Net: 'n24')
+    * Pin 'in1'  <--  Connect to Output of U22 (OR, net 'n22')
+    * Pin 'in2'  <--  Connect to Output of U23 (OR, net 'n23')
+    * Output 'n24' -->  Feeds: U25.in1 (OR)
+
+  [U25] OR Gate (Level 5, Output Net: 'n25')
+    * Pin 'in1'  <--  Connect to Output of U24 (OR, net 'n24')
+    * Pin 'in2'  <--  Connect to Output of U21 (AND, net 'n21')
+    * Output 'n25' -->  Feeds: PRIMARY OUTPUT [b]
+
+  [U26] AND Gate (Level 2, Output Net: 'n26')
+    * Pin 'in1'  <--  Connect to Output of U9 (NOT, net 'n9')
+    * Pin 'in2'  <--  Connect to Primary Input 'b'
+    * Output 'n26' -->  Feeds: U28.in1 (OR), U33.in1 (AND), U34.in1 (AND)
+
+  [U27] OR Gate (Level 2, Output Net: 'n27')
+    * Pin 'in1'  <--  Connect to Output of U6 (NOT, net 'n6')
+    * Pin 'in2'  <--  Connect to Primary Input 'd'
+    * Output 'n27' -->  Feeds: U29.in1 (OR)
+
+  [U28] OR Gate (Level 3, Output Net: 'n28')
+    * Pin 'in1'  <--  Connect to Output of U26 (AND, net 'n26')
+    * Pin 'in2'  <--  Connect to Output of U11 (AND, net 'n11')
+    * Output 'n28' -->  Feeds: U29.in2 (OR)
+
+  [U29] OR Gate (Level 4, Output Net: 'n29')
+    * Pin 'in1'  <--  Connect to Output of U27 (OR, net 'n27')
+    * Pin 'in2'  <--  Connect to Output of U28 (OR, net 'n28')
+    * Output 'n29' -->  Feeds: PRIMARY OUTPUT [c]
+
+  [U30] OR Gate (Level 3, Output Net: 'n30')
+    * Pin 'in1'  <--  Connect to Output of U3 (AND, net 'n3')
+    * Pin 'in2'  <--  Connect to Output of U5 (AND, net 'n5')
+    * Output 'n30' -->  Feeds: U32.in1 (OR)
+
+  [U31] OR Gate (Level 4, Output Net: 'n31')
+    * Pin 'in1'  <--  Connect to Output of U8 (AND, net 'n8')
+    * Pin 'in2'  <--  Connect to Output of U4 (AND, net 'n4')
+    * Output 'n31' -->  Feeds: U32.in2 (OR)
+
+  [U32] OR Gate (Level 5, Output Net: 'n32')
+    * Pin 'in1'  <--  Connect to Output of U30 (OR, net 'n30')
+    * Pin 'in2'  <--  Connect to Output of U31 (OR, net 'n31')
+    * Output 'n32' -->  Feeds: PRIMARY OUTPUT [d]
+
+  [U33] AND Gate (Level 3, Output Net: 'n33')
+    * Pin 'in1'  <--  Connect to Output of U26 (AND, net 'n26')
+    * Pin 'in2'  <--  Connect to Output of U6 (NOT, net 'n6')
+    * Output 'n33' -->  Feeds: U36.in2 (OR)
+
+  [U34] AND Gate (Level 3, Output Net: 'n34')
+    * Pin 'in1'  <--  Connect to Output of U26 (AND, net 'n26')
+    * Pin 'in2'  <--  Connect to Output of U2 (NOT, net 'n2')
+    * Output 'n34' -->  Feeds: U37.in1 (OR)
+
+  [U35] AND Gate (Level 3, Output Net: 'n35')
+    * Pin 'in1'  <--  Connect to Output of U11 (AND, net 'n11')
+    * Pin 'in2'  <--  Connect to Primary Input 'c'
+    * Output 'n35' -->  Feeds: U37.in2 (OR)
+
+  [U36] OR Gate (Level 4, Output Net: 'n36')
+    * Pin 'in1'  <--  Connect to Output of U18 (AND, net 'n18')
+    * Pin 'in2'  <--  Connect to Output of U33 (AND, net 'n33')
+    * Output 'n36' -->  Feeds: U38.in1 (OR)
+
+  [U37] OR Gate (Level 4, Output Net: 'n37')
+    * Pin 'in1'  <--  Connect to Output of U34 (AND, net 'n34')
+    * Pin 'in2'  <--  Connect to Output of U35 (AND, net 'n35')
+    * Output 'n37' -->  Feeds: U38.in2 (OR)
+
+  [U38] OR Gate (Level 5, Output Net: 'n38')
+    * Pin 'in1'  <--  Connect to Output of U36 (OR, net 'n36')
+    * Pin 'in2'  <--  Connect to Output of U37 (OR, net 'n37')
+    * Output 'n38' -->  Feeds: PRIMARY OUTPUT [f]
+
+  [U39] AND Gate (Level 2, Output Net: 'n39')
+    * Pin 'in1'  <--  Connect to Primary Input 'a'
+    * Pin 'in2'  <--  Connect to Output of U2 (NOT, net 'n2')
+    * Output 'n39' -->  Feeds: U41.in1 (OR)
+
+  [U40] OR Gate (Level 3, Output Net: 'n40')
+    * Pin 'in1'  <--  Connect to Output of U5 (AND, net 'n5')
+    * Pin 'in2'  <--  Connect to Output of U7 (AND, net 'n7')
+    * Output 'n40' -->  Feeds: U42.in1 (OR)
+
+  [U41] OR Gate (Level 3, Output Net: 'n41')
+    * Pin 'in1'  <--  Connect to Output of U39 (AND, net 'n39')
+    * Pin 'in2'  <--  Connect to Output of U4 (AND, net 'n4')
+    * Output 'n41' -->  Feeds: U42.in2 (OR)
+
+  [U42] OR Gate (Level 4, Output Net: 'n42')
+    * Pin 'in1'  <--  Connect to Output of U40 (OR, net 'n40')
+    * Pin 'in2'  <--  Connect to Output of U41 (OR, net 'n41')
+    * Output 'n42' -->  Feeds: PRIMARY OUTPUT [g]
+
+4. PRIMARY OUTPUT CONNECTIONS & BOOLEAN EQUATIONS
+----------------------------------------------------------------------------
+  Output 's':
+    * Driven by : Direct wire from Primary Input 'a'
+    * Equation  : s = a
+  Output 'a':
+    * Driven by : Output pin of U16 (OR, net 'n16')
+    * Equation  : a = ((((~b & ~d) | (c & ~d)) | ((~b & c) | ((b & ~c) & d))) | ((~a & c) | (a & ~b)))
+  Output 'b':
+    * Driven by : Output pin of U25 (OR, net 'n25')
+    * Equation  : b = ((((~a & ~b) | (~c & ~d)) | ((a & b) | (~b & ~c))) | ((~a & c) & d))
+  Output 'c':
+    * Driven by : Output pin of U29 (OR, net 'n29')
+    * Equation  : c = ((~c | d) | ((~a & b) | (a & ~b)))
+  Output 'd':
+    * Driven by : Output pin of U32 (OR, net 'n32')
+    * Equation  : d = (((~b & ~d) | (~b & c)) | (((b & ~c) & d) | (c & ~d)))
+  Output 'e':
+    * Driven by : Output pin of U12 (OR, net 'n12')
+    * Equation  : e = ((~b & ~d) | (c & ~d))
+  Output 'f':
+    * Driven by : Output pin of U38 (OR, net 'n38')
+    * Equation  : f = (((~c & ~d) | ((~a & b) & ~c)) | (((~a & b) & ~d) | ((a & ~b) & c)))
+  Output 'g':
+    * Driven by : Output pin of U42 (OR, net 'n42')
+    * Equation  : g = (((~b & c) | (b & ~c)) | ((a & ~d) | (c & ~d)))
+
+5. TRUTH TABLE VERIFICATION
+----------------------------------------------------------------------------
+    a   b   c   d |    s(Exp/Sim)    a(Exp/Sim)    b(Exp/Sim)    c(Exp/Sim)    d(Exp/Sim)    e(Exp/Sim)    f(Exp/Sim)    g(Exp/Sim)
+  ---------------------------------------------------------------------------------------------------------------------------------
+    0   0   0   0 |           0/0           1/1           1/1           1/1           1/1           1/1           1/1           0/0
+    0   0   0   1 |           0/0           0/0           1/1           1/1           0/0           0/0           0/0           0/0
+    0   0   1   0 |           0/0           1/1           1/1           0/0           1/1           1/1           0/0           1/1
+    0   0   1   1 |           0/0           1/1           1/1           1/1           1/1           0/0           0/0           1/1
+    0   1   0   0 |           0/0           0/0           1/1           1/1           0/0           0/0           1/1           1/1
+    0   1   0   1 |           0/0           1/1           0/0           1/1           1/1           0/0           1/1           1/1
+    0   1   1   0 |           0/0           1/1           0/0           1/1           1/1           1/1           1/1           1/1
+    0   1   1   1 |           0/0           1/1           1/1           1/1           0/0           0/0           0/0           0/0
+    1   0   0   0 |           1/1           1/1           1/1           1/1           1/1           1/1           1/1           1/1
+    1   0   0   1 |           1/1           1/1           1/1           1/1           0/0           0/0           0/0           0/0
+    1   0   1   0 |           1/1           1/1           0/0           1/1           1/1           1/1           1/1           1/1
+    1   0   1   1 |           1/1           1/1           0/0           1/1           1/1           0/0           1/1           1/1
+    1   1   0   0 |           1/1           0/0           1/1           1/1           0/0           0/0           1/1           1/1
+    1   1   0   1 |           1/1           1/1           1/1           1/1           1/1           0/0           0/0           1/1
+    1   1   1   0 |           1/1           1/1           1/1           0/0           1/1           1/1           0/0           1/1
+    1   1   1   1 |           1/1           0/0           1/1           1/1           0/0           0/0           0/0           0/0
+
+6. MERMAID CIRCUIT SCHEMATIC
+----------------------------------------------------------------------------
+flowchart LR
+    IN_a(["Input a"])
+    IN_b(["Input b"])
+    IN_c(["Input c"])
+    IN_d(["Input d"])
+    U1["U1: NOT<br/>(out: n1)"]
+    U2["U2: NOT<br/>(out: n2)"]
+    U3["U3: AND<br/>(out: n3)"]
+    U4["U4: AND<br/>(out: n4)"]
+    U5["U5: AND<br/>(out: n5)"]
+    U6["U6: NOT<br/>(out: n6)"]
+    U7["U7: AND<br/>(out: n7)"]
+    U8["U8: AND<br/>(out: n8)"]
+    U9["U9: NOT<br/>(out: n9)"]
+    U10["U10: AND<br/>(out: n10)"]
+    U11["U11: AND<br/>(out: n11)"]
+    U12["U12: OR<br/>(out: n12)"]
+    U13["U13: OR<br/>(out: n13)"]
+    U14["U14: OR<br/>(out: n14)"]
+    U15["U15: OR<br/>(out: n15)"]
+    U16["U16: OR<br/>(out: n16)"]
+    U17["U17: AND<br/>(out: n17)"]
+    U18["U18: AND<br/>(out: n18)"]
+    U19["U19: AND<br/>(out: n19)"]
+    U20["U20: AND<br/>(out: n20)"]
+    U21["U21: AND<br/>(out: n21)"]
+    U22["U22: OR<br/>(out: n22)"]
+    U23["U23: OR<br/>(out: n23)"]
+    U24["U24: OR<br/>(out: n24)"]
+    U25["U25: OR<br/>(out: n25)"]
+    U26["U26: AND<br/>(out: n26)"]
+    U27["U27: OR<br/>(out: n27)"]
+    U28["U28: OR<br/>(out: n28)"]
+    U29["U29: OR<br/>(out: n29)"]
+    U30["U30: OR<br/>(out: n30)"]
+    U31["U31: OR<br/>(out: n31)"]
+    U32["U32: OR<br/>(out: n32)"]
+    U33["U33: AND<br/>(out: n33)"]
+    U34["U34: AND<br/>(out: n34)"]
+    U35["U35: AND<br/>(out: n35)"]
+    U36["U36: OR<br/>(out: n36)"]
+    U37["U37: OR<br/>(out: n37)"]
+    U38["U38: OR<br/>(out: n38)"]
+    U39["U39: AND<br/>(out: n39)"]
+    U40["U40: OR<br/>(out: n40)"]
+    U41["U41: OR<br/>(out: n41)"]
+    U42["U42: OR<br/>(out: n42)"]
+    OUT_s(("Output s"))
+    OUT_a(("Output a"))
+    OUT_b(("Output b"))
+    OUT_c(("Output c"))
+    OUT_d(("Output d"))
+    OUT_e(("Output e"))
+    OUT_f(("Output f"))
+    OUT_g(("Output g"))
+    IN_b -->|"b -> in"| U1
+    IN_d -->|"d -> in"| U2
+    U1 -->|"n1 -> in1"| U3
+    U2 -->|"n2 -> in2"| U3
+    IN_c -->|"c -> in1"| U4
+    U2 -->|"n2 -> in2"| U4
+    U1 -->|"n1 -> in1"| U5
+    IN_c -->|"c -> in2"| U5
+    IN_c -->|"c -> in"| U6
+    IN_b -->|"b -> in1"| U7
+    U6 -->|"n6 -> in2"| U7
+    U7 -->|"n7 -> in1"| U8
+    IN_d -->|"d -> in2"| U8
+    IN_a -->|"a -> in"| U9
+    U9 -->|"n9 -> in1"| U10
+    IN_c -->|"c -> in2"| U10
+    IN_a -->|"a -> in1"| U11
+    U1 -->|"n1 -> in2"| U11
+    U3 -->|"n3 -> in1"| U12
+    U4 -->|"n4 -> in2"| U12
+    U5 -->|"n5 -> in1"| U13
+    U8 -->|"n8 -> in2"| U13
+    U10 -->|"n10 -> in1"| U14
+    U11 -->|"n11 -> in2"| U14
+    U12 -->|"n12 -> in1"| U15
+    U13 -->|"n13 -> in2"| U15
+    U15 -->|"n15 -> in1"| U16
+    U14 -->|"n14 -> in2"| U16
+    U9 -->|"n9 -> in1"| U17
+    U1 -->|"n1 -> in2"| U17
+    U6 -->|"n6 -> in1"| U18
+    U2 -->|"n2 -> in2"| U18
+    IN_a -->|"a -> in1"| U19
+    IN_b -->|"b -> in2"| U19
+    U1 -->|"n1 -> in1"| U20
+    U6 -->|"n6 -> in2"| U20
+    U10 -->|"n10 -> in1"| U21
+    IN_d -->|"d -> in2"| U21
+    U17 -->|"n17 -> in1"| U22
+    U18 -->|"n18 -> in2"| U22
+    U19 -->|"n19 -> in1"| U23
+    U20 -->|"n20 -> in2"| U23
+    U22 -->|"n22 -> in1"| U24
+    U23 -->|"n23 -> in2"| U24
+    U24 -->|"n24 -> in1"| U25
+    U21 -->|"n21 -> in2"| U25
+    U9 -->|"n9 -> in1"| U26
+    IN_b -->|"b -> in2"| U26
+    U6 -->|"n6 -> in1"| U27
+    IN_d -->|"d -> in2"| U27
+    U26 -->|"n26 -> in1"| U28
+    U11 -->|"n11 -> in2"| U28
+    U27 -->|"n27 -> in1"| U29
+    U28 -->|"n28 -> in2"| U29
+    U3 -->|"n3 -> in1"| U30
+    U5 -->|"n5 -> in2"| U30
+    U8 -->|"n8 -> in1"| U31
+    U4 -->|"n4 -> in2"| U31
+    U30 -->|"n30 -> in1"| U32
+    U31 -->|"n31 -> in2"| U32
+    U26 -->|"n26 -> in1"| U33
+    U6 -->|"n6 -> in2"| U33
+    U26 -->|"n26 -> in1"| U34
+    U2 -->|"n2 -> in2"| U34
+    U11 -->|"n11 -> in1"| U35
+    IN_c -->|"c -> in2"| U35
+    U18 -->|"n18 -> in1"| U36
+    U33 -->|"n33 -> in2"| U36
+    U34 -->|"n34 -> in1"| U37
+    U35 -->|"n35 -> in2"| U37
+    U36 -->|"n36 -> in1"| U38
+    U37 -->|"n37 -> in2"| U38
+    IN_a -->|"a -> in1"| U39
+    U2 -->|"n2 -> in2"| U39
+    U5 -->|"n5 -> in1"| U40
+    U7 -->|"n7 -> in2"| U40
+    U39 -->|"n39 -> in1"| U41
+    U4 -->|"n4 -> in2"| U41
+    U40 -->|"n40 -> in1"| U42
+    U41 -->|"n41 -> in2"| U42
+    IN_a -->|"a"| OUT_s
+    U16 -->|"n16"| OUT_a
+    U25 -->|"n25"| OUT_b
+    U29 -->|"n29"| OUT_c
+    U32 -->|"n32"| OUT_d
+    U12 -->|"n12"| OUT_e
+    U38 -->|"n38"| OUT_f
+    U42 -->|"n42"| OUT_g
+
+============================================================================
