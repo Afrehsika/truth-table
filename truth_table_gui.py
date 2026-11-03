@@ -663,7 +663,7 @@ class PygameTruthTableApp:
         pygame.draw.polygon(self.screen, (250, 204, 21), bolt_pts)
 
         title_surf = self.font_title.render(
-            "Truth Table to Logic Circuit Synthesizer (Pygame CAD)", True, COL_TEXT
+            "Truth Table to Logic Circuit Synthesizer", True, COL_TEXT
         )
         self.screen.blit(title_surf, (32, 9))
 

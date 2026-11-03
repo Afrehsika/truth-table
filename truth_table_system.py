@@ -1840,7 +1840,7 @@ def main() -> None:
         "--gui",
         "-g",
         action="store_true",
-        help="Launch the Graphical User Interface (GUI) with interactive schematic & truth table editor",
+        help="Launch the Graphical User Interface (GUI)",
     )
     parser.add_argument(
         "--demo",

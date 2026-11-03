@@ -15,49 +15,34 @@ A zero-dependency Python tool that takes any **Truth Table** (inputs, outputs, a
 
 ---
 
-## Quick Start: 5 Ways to Run It
+## Quick Start: 6 Ways to Run It
 
 Open a terminal (PowerShell or Command Prompt) in `c:\Users\Administrator\truth table`.
 
-### 1. Launch the Pygame GUI (Recommended)
-Run the interactive 60-FPS **Pygame Digital Logic CAD & Synthesis Workbench** with a clickable Truth Table editor, Building Block selector, Wiring Tables, and a **Live Animated Circuit Schematic**:
+### 1. Launch the Desktop GUI
+Run the interactive 60-FPS workbench with clickable Truth Table editor, Building Block selector, Wiring Tables, and Live Animated Circuit Schematic:
 ```powershell
 python truth_table_gui.py
 ```
 *(or `python truth_table_system.py --gui`)*
 
-**Pygame GUI Controls & Features:**
-- **AUTO Simplest Circuit Toggle**: Enabled by default (`AUTO: simplest circuit [ON]`). The engine automatically tests multiple standard gate libraries (AND/OR/NOT, XOR-enabled, NAND-only, NOR-only, wide gates), evaluates both SOP and POS forms, identifies shared multi-output subexpressions, and synthesizes the circuit with the **absolute minimum gate count**!
-- **Inputs & Outputs Textboxes**: Click either textbox on the top-left, type your variable names (e.g., `a, b, c, d` and `s, a, b, c, d, e, f, g`), and press `Enter` or click **Rebuild**.
-- **Allowed Building Blocks**: When AUTO is OFF, click individual gate pills (`AND`, `OR`, `NOT`, `NAND`, `NOR`, `XOR`, `XNOR`, `MUX2`, etc.) to toggle them on/off, or click one of the 1-click presets (`AND/OR/NOT`, `NAND Only`, `NOR Only`, `+XOR`, `MUX2+NOT`, `All`). You can also tick wide gates (`AND3`, `OR3`, `MUX2`) while AUTO is ON to let the system take advantage of them.
-- **Interactive Truth Table Grid (Sidebar & Full View)**:
-  - **Click/Drag across Output Cells** (`0`, `1`, `X`) to paint values and auto-synthesize.
-  - **Quick Fill Buttons**: `All 0`, `All 1`, `All X`, and `Invert (0<->1)`.
-  - **Click any Row's Input Columns** to load that row's bit combination directly into the Live Simulator!
-  - Click **Full Table View** or Tab 3 to edit all 16 rows and up to 8+ outputs across a high-density, full-screen truth table matrix.
-- **Tab 1 — 1. Circuit Schematic (Live Interactive Simulator)**:
-  - **Click any Primary Input switch (`A = 0`)** on the left to toggle it `0 <-> 1` live and watch glowing green signal pulses travel along active (`1`) wires through the gates!
-  - **Auto-Fitting Dimensions**: Automatically scales gate and column spacing so nodes and outputs are never pushed offscreen.
-  - **Left-click & drag any Gate (`U1`, `U2`, ...)** to reposition it on the schematic.
-  - **Right-click & drag** anywhere on the canvas to pan, or click **Reset Gate Layout**.
-  - **Hover over any Gate** to inspect pin inputs, output logic level, and connected net.
-- **Tab 2 — 2. Input Routing & Gate Wiring**: Structured cards showing **Where Each Input Goes** (fan-out & pin destinations) and **How to Connect Each Gate** (pin-by-pin wiring guide).
-- **Tab 3 — 3. Full Truth Table Editor**: Full-screen matrix view supporting high row counts and wide multi-output truth tables.
-- **Tab 4 — 4. Full Report & Mermaid Code**: Complete text report with gate breakdown, Boolean formulas, truth table verification table, Mermaid diagram code, and a **Save Report (.txt)** button.
-- **Background Worker Thread**: Synthesis runs asynchronously in a worker thread so the 60-FPS GUI never freezes during heavy multi-output synthesis.
-
 ---
 
-### 2. Run Built-in CLI Demos
-See three complete examples (1-Bit Full Adder, NAND-only XOR, and 3-Input Majority Voter):
+### 2. Automatic Simplest Circuit CLI (`--auto`)
+Let the system automatically test multiple gate libraries (`AND/OR/NOT`, `AND/OR/XOR`, `NAND only`, `NOR only`, etc.), compare SOP vs POS forms, extract shared terms, and configure the **simplest possible circuit** (fewest gates):
 ```powershell
-python truth_table_system.py --demo
+python truth_table_system.py --inputs "A,B" --outputs "Y" --values "0,1,1,0" --auto
+```
+
+Multi-output example (Full Adder `Sum, Cout`):
+```powershell
+python truth_table_system.py --inputs "A,B,Cin" --outputs "Sum,Cout" --values "0,0,1,0,1,0,0,1,1,0,0,1,0,1,1,1" --auto
 ```
 
 ---
 
-### 3. Run CLI Interactive Mode (Step-by-Step Wizard)
-If you want the program to ask you for your inputs, outputs, building blocks, and truth table rows one by one:
+### 3. Interactive Step-by-Step Wizard
+If you want the program to prompt you for your inputs, outputs, building blocks, and truth table rows one by one:
 ```powershell
 python truth_table_system.py --interactive
 ```
@@ -67,7 +52,7 @@ Example session:
 ```text
 Enter input variable names separated by commas (e.g. A, B, C): A, B
 Enter output variable name(s) separated by commas (e.g. Y or Sum, Cout): Y
-Enter building blocks or preset (default: AND, OR, NOT): NAND
+Enter building blocks, preset, or 'AUTO' (default: AUTO): AUTO
   Row  0 [A=0 B=0] -> Y = 0
   Row  1 [A=0 B=1] -> Y = 1
   Row  2 [A=1 B=0] -> Y = 1
@@ -76,32 +61,34 @@ Enter building blocks or preset (default: AND, OR, NOT): NAND
 
 ---
 
-### 3. Run Directly from Command-Line Arguments
+### 4. Built-in Demonstration Circuits
+See three complete examples (1-Bit Full Adder, NAND-only XOR, and 3-Input Majority Voter):
+```powershell
+python truth_table_system.py --demo
+```
+
+---
+
+### 5. Run Directly from Command-Line Arguments
 
 Pass `--inputs`, `--outputs`, `--values` (truth table outputs in binary counting order `00..0` to `11..1`), and optional `--blocks` or `--auto`:
 
-- **Example A: Automatic Simplest Circuit Configuration (`--auto`)**
-  Let the system test multiple libraries and configure the simplest possible circuit automatically:
-  ```powershell
-  python truth_table_system.py --inputs "A,B" --outputs "Y" --values "0,1,1,0" --auto
-  ```
-
-- **Example B: 2-input XOR using ONLY `NAND` gates**
+- **Example A: 2-input XOR using ONLY `NAND` gates**
   ```powershell
   python truth_table_system.py --inputs "A,B" --outputs "Y" --values "0,1,1,0" --blocks "NAND"
   ```
 
-- **Example C: 3-input Majority Circuit using `AND, OR, NOT`**
+- **Example B: 3-input Majority Circuit using `AND, OR, NOT`**
   ```powershell
   python truth_table_system.py --inputs "A,B,C" --outputs "M" --values "0,0,0,1,0,1,1,1" --blocks "AND,OR,NOT"
   ```
 
-- **Example D: Truth Table with Don't Care (`X`) values**
+- **Example C: Truth Table with Don't Care (`X`) values**
   ```powershell
   python truth_table_system.py --inputs "A,B,C" --outputs "Y" --values "0,0,1,X,0,1,1,1" --blocks "AND,OR,NOT"
   ```
 
-- **Example E: Multi-Output Circuit (Half Adder: `Sum` and `Carry`)**
+- **Example D: Multi-Output Circuit (Half Adder: `Sum` and `Carry`)**
   For 2 outputs across 4 rows, list the pairs in order (`0,0`, `1,0`, `1,0`, `0,1`):
   ```powershell
   python truth_table_system.py --inputs "A,B" --outputs "Sum,Carry" --values "0,0,1,0,1,0,0,1" --blocks "XOR,AND"
@@ -109,7 +96,7 @@ Pass `--inputs`, `--outputs`, `--values` (truth table outputs in binary counting
 
 ---
 
-### 4. Run from a JSON File
+### 6. Run from a JSON File
 
 Create a file (e.g., `my_circuit.json`):
 ```json
